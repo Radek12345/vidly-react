@@ -1,14 +1,22 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
+import { getGenres } from "../services/fakeGenreService";
 import Like from "../components/common/like";
+import ListGroup from "./common/listGroup";
 import Pagination from "../components/common/pagination";
+import { paginate } from "../utils/paginate";
 
 class Movies extends Component {
   state = {
-    movies: getMovies(),
+    movies: [],
+    genres: [],
     currentPage: 1,
     pageSize: 4
   };
+
+  componentDidMount() {
+    this.setState({ movies: getMovies(), genres: getGenres() });
+  }
 
   handleDelete = movie => {
     const filteredMovies = this.state.movies.filter(m => m._id !== movie._id);
@@ -27,41 +35,55 @@ class Movies extends Component {
     this.setState({ currentPage: page });
   };
 
+  handleGenreSelect = genre => {
+    console.log(genre);
+  };
+
   render() {
     const { length: moviesCount } = this.state.movies;
-    const { pageSize, currentPage } = this.state;
+    const { pageSize, currentPage, movies: allMovies } = this.state;
 
     if (moviesCount === 0) return <p>There are no movies in the database</p>;
 
-    return (
-      <React.Fragment>
-        <p>Showing {moviesCount} movies in the database.</p>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Genre</th>
-              <th>Stock</th>
-              <th>Rate</th>
-              <th />
-              <th />
-            </tr>
-          </thead>
-          <tbody>{this.getMoviesMarkups()}</tbody>
-        </table>
+    const movies = paginate(allMovies, currentPage, pageSize);
 
-        <Pagination
-          itemsCount={moviesCount}
-          pageSize={pageSize}
-          currentPage={currentPage}
-          onPageChange={this.handlePageChange}
-        />
-      </React.Fragment>
+    return (
+      <div className="row">
+        <div className="col-2">
+          <ListGroup
+            items={this.state.genres}
+            onItemSelect={this.handleGenreSelect}
+          />
+        </div>
+        <div className="col">
+          <p>Showing {moviesCount} movies in the database.</p>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Stock</th>
+                <th>Rate</th>
+                <th />
+                <th />
+              </tr>
+            </thead>
+            <tbody>{this.getMoviesMarkups(movies)}</tbody>
+          </table>
+
+          <Pagination
+            itemsCount={moviesCount}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={this.handlePageChange}
+          />
+        </div>
+      </div>
     );
   }
 
-  getMoviesMarkups() {
-    const movies = this.state.movies.map(movie => (
+  getMoviesMarkups(moviesParam) {
+    const movies = moviesParam.map(movie => (
       <tr key={movie._id}>
         <td>{movie.title}</td>
         <td>{movie.genre.name}</td>
