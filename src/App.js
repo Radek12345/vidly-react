@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import RegisterForm from "./components/registerForm";
+import Flex from "./components/flex";
 
 function App() {
   return (
     <main className="container">
-      <RegisterForm />
+      <Flex />
     </main>
   );
 }

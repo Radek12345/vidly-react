@@ -5,6 +5,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
+import "flexlayout-react/style/dark.css";
 
 ReactDOM.render(<App />, document.getElementById("root"));
 

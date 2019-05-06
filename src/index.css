@@ -12,3 +12,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+#flex-container {
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  position: absolute;
+  overflow: hidden;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+}
+.panel {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #222;
+  border: 1px solid #555;
+  box-sizing: border-box;
+}
