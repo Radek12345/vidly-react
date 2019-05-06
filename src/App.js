@@ -1,12 +1,11 @@
 import React from "react";
 import "./App.css";
-import Movies from "./components/movies";
-import LoginForm from "./components/loginForm";
+import RegisterForm from "./components/registerForm";
 
 function App() {
   return (
     <main className="container">
-      <LoginForm />
+      <RegisterForm />
     </main>
   );
 }
