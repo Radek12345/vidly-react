@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import Flex from "./components/flex";
+import Movies from "./components/movies";
 
 function App() {
   return (
     <main className="container">
-      <Flex />
+      <Movies />
     </main>
   );
 }
